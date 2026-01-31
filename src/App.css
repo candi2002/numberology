@@ -346,7 +346,7 @@ Toggle chart switch
 
 /* NÚT ĐANG CHỌN */
 .chart-switch button.active {
-  background: #00ffc3;
+  background: #1fffcb;
   color: #000;
 }
 

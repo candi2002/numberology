@@ -62,13 +62,19 @@ export default function Home() {
               <div className="number-grid">
                 <div><span>Số đường đời</span><b>{result.lifePathNumber}</b></div>
                 <div><span>Số định mệnh</span><b>{result.destinyNumber}</b></div>
+                <div><span>Số ngày sinh</span><b>{result.birthdayNumber}</b></div>
                 <div><span>Số linh hồn</span><b>{result.soulUrgeNumber}</b></div>
                 <div><span>Số tính cách</span><b>{result.personalityNumber}</b></div>
                 <div><span>Số nội cảm</span><b>{result.innerSelfNumber}</b></div>
                 <div><span>Số cân bằng</span><b>{result.balanceNumber}</b></div>
                 <div><span>Số tiềm thức</span><b>{result.subconsciousNumber}</b></div>
-                <div><span>Số sinh nhật</span><b>{result.birthdayNumber}</b></div>
+
                 <div><span>Số khuyết thiếu</span><b>{result.missingNameNumbers.join(", ")}</b></div>
+                <div><span>Số đam mê</span><b>{result.passionNumber}</b></div>
+                <div><span>Số bảo mật</span><b>{result.confidentialNumber}</b></div>
+                <div><span>Số trưởng thành</span><b>{result.maturityNumber}</b></div>
+                <div><span>Số kết nối</span><b>{result.connectionNumber}</b></div>
+              
               </div>
               {/* Button toggle loại chart */}
               <ChartToggle dob={dob} name={name} />

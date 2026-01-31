@@ -4,11 +4,6 @@ import { IslandOverlay } from "./IslandOverlay";
 import { buildChartBundle } from "../../numerology/birthChart";
 import "../../App.css";
 
-/* =========================
-   Render cell nhiều màu
-========================= */
-/* `buildChartBundle` is provided by `src/numerology/birthChart` —
-   the implementation here was a duplicate and has been removed. */
 
 function Cell({ num, layers, highlighted, highlightType }) {
   const hasValue =
@@ -106,7 +101,8 @@ export function NumberChart({
           className={`toggle-btn ${addNickname ? "active" : ""}`}
           onClick={() => setAddNickname(p => !p)}
         >
-          {addNickname ? "Ẩn nickname" : "Hiện nickname"}
+          {/* {addNickname ? "Ẩn nickname" : "Hiện nickname"} */}
+          {addNickname ? "Bỏ nickname" : "Thêm nickname"}
         </button>
       </div>
 
@@ -246,9 +242,14 @@ export default function ChartToggle({ dob, name }) {
   return (
     <>
       <div className="chart-switch">
-        <button onClick={() => setChartType("birth")}>Ngày sinh</button>
-        <button onClick={() => setChartType("name")}>Tên</button>
-        <button onClick={() => setChartType("mixed")}>Hỗn hợp</button>
+        {/* <button onClick={() => setChartType("birth")}>Ngày sinh</button> */}
+        <button
+          className={chartType === "birth" ? "active" : ""}
+          onClick={() => setChartType("birth")}
+        >Ngày sinh</button>
+
+        <button className={chartType === "name" ? "active" : ""} onClick={() => setChartType("name")}>Tên</button>
+        <button className={chartType === "mixed" ? "active" : ""} onClick={() => setChartType("mixed")}>Hỗn hợp</button>
       </div>
 
       <NumberChart
@@ -260,7 +261,7 @@ export default function ChartToggle({ dob, name }) {
             : "Hỗn hợp"
         }
         chart={current.chart}
-        layers={current.layers}   // ⬅️ DÒNG QUYẾT ĐỊNH
+        layers={current.layers}
         arrows={current.arrows}
         islands={current.islands}
         addNickname={addNickname}

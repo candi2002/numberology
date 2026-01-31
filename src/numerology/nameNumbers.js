@@ -87,3 +87,27 @@ export function calculateMissingNumbers(fullName) {
   }
   return missing;
 } 
+//So dam me (nhiều nhất trong tên)
+export function calculatePassionNumber(fullName) {
+  const name = normalizeName(fullName);
+  const countMap = {};
+  for (let char of name) {
+    const num = letterMap[char];
+    countMap[num] = (countMap[num] || 0) + 1;
+  }
+  let maxCount = 0;
+  let maxNum = 0;
+  for (let num in countMap) {
+    if (countMap[num] > maxCount) {
+      maxCount = countMap[num];
+      maxNum = parseInt(num);
+    }
+  }
+  return maxNum;    
+}
+
+   //Số bảo mật = số lượng chữ trong tên
+export function calculateConfidentialNumber(fullName) {
+  const name = normalizeName(fullName);
+  return name.length;
+}

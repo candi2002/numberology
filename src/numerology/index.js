@@ -1,7 +1,6 @@
 import * as NameNum from "./nameNumbers";
 import * as DateNum from "./dateNumbers";
-import * as BC from "./birthChart";
-// import * as NC from "./nameChart";
+
 export function calculateNumerology(name, dob) {
   if (!name || !dob) {
     return null; // ❗ chỉ return data
@@ -17,6 +16,18 @@ export function calculateNumerology(name, dob) {
     const balanceNumber = NameNum.calculateBalanceNumber(name);
     const subconsciousNumber = NameNum.calculateSubconsciousNumber(name);
     const missingNameNumbers = NameNum.calculateMissingNumbers(name);
+    const passionNumber = NameNum.calculatePassionNumber(name);
+    const confidentialNumber = NameNum.calculateConfidentialNumber(name);
+
+    // Số kết hợp
+    //Số trưởng thành = lifePathNumber + destinyNumber
+    const maturityNumber = reduceToOneDigit(lifePathNumber + destinyNumber);
+    //Số kết nối = lifepathnumber - destinyNumber
+    let connectionNumber = Math.abs(lifePathNumber - destinyNumber);
+    connectionNumber = reduceToOneDigit(connectionNumber);
+
+
+ 
 
 
 
@@ -32,6 +43,10 @@ export function calculateNumerology(name, dob) {
     balanceNumber,
     subconsciousNumber,
     missingNameNumbers,
+    passionNumber,
+    confidentialNumber,
+    maturityNumber,
+    connectionNumber,
     createAt: new Date().toISOString()
   };
 }
