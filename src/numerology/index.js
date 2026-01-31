@@ -17,21 +17,6 @@ export function calculateNumerology(name, dob) {
     const balanceNumber = NameNum.calculateBalanceNumber(name);
     const subconsciousNumber = NameNum.calculateSubconsciousNumber(name);
     const missingNameNumbers = NameNum.calculateMissingNumbers(name);
-    // BIRTH CHART
-    const birthChart = BC.birthChartPythagoras(dob);
-    const arrows = BC.detectArrows(birthChart);
-    const islands = BC.detectIslands(birthChart);
-    
-    // NAME CHART
-    const nameChart = BC.nameChartPythagoras(name);
-    const nameArrows = BC.detectArrows(nameChart);
-    const nameIslands = BC.detectIslands(nameChart);
-
-    //MIXED CHART
-    const mixedChart = BC.mixedChartPythagoras(name, dob);
-    const mixedArrows = BC.detectArrows(mixedChart);
-    const mixedIslands = BC.detectIslands(mixedChart);
-    
 
 
 
@@ -46,16 +31,7 @@ export function calculateNumerology(name, dob) {
     birthdayNumber,
     balanceNumber,
     subconsciousNumber,
-    birthChart,
-    arrows,
-    islands,
     missingNameNumbers,
-    nameChart,
-    nameArrows,
-    nameIslands,
-    mixedChart,
-    mixedArrows,
-    mixedIslands,
     createAt: new Date().toISOString()
   };
 }

@@ -405,6 +405,16 @@ Toggle chart switch
   margin: 0 auto;
   padding: 16px 0;
 }
+.chart-wrapper {
+  display: grid;
+  grid-template-columns: 220px auto 260px;
+  gap: 32px;
+
+  max-width: 1100px;
+  margin: 0 auto; /* căn giữa màn hình */
+  align-items: flex-start;
+}
+
 
 /* Cột trái: biểu đồ */
 .chart-left {
@@ -420,4 +430,80 @@ Toggle chart switch
 /* Danh sách gọn gàng hơn */
 .chart-right .arrow-list {
   margin-top: 8px;
+}
+.chart-nickname {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nickname-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.nickname-input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.nickname-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+.nickname-save-btn {
+  margin-top: 6px;
+  padding: 6px 10px;
+
+  background: #f59e0b;
+  color: #111;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nickname-save-btn:hover:not(:disabled) {
+  background: #d97706;
+}
+
+.nickname-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nickname-saved {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #16a34a;
+}
+
+.cell-digits {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.digit {
+  font-weight: 600;
+}
+
+.digit-dob {
+  color: #4caf50;
+}
+
+.digit-name {
+  color: #2196f3;
+}
+
+.digit-nickname {
+  color: #ff9800;
 }

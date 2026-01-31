@@ -1,13 +1,21 @@
 import { ARROWS, CELL_POS, NEIGHBORS, letterMap } from "./constants";
 import { normalizeName } from "../utils/normalize";
 
-export function birthChartPythagoras(dob) {
-  if (!dob) return null;
+function extractDigitsFromDob(dob) {
+  if (!dob) return [];
+  return dob.replaceAll("-", "").split("");
+}
 
-  // yyyy-mm-dd → lấy chữ số
-  const digits = dob.replaceAll("-", "").split("");
+function extractDigitsFromName(name) {
+  if (!name) return [];
+  const normalized = normalizeName(name);
+  return normalized
+    .split("")
+    .map(c => letterMap[c] || "")
+    .filter(Boolean);
+}
 
-  // Khởi tạo map 1–9
+function buildNumberChart(digits) {
   const chart = {
     1: "", 2: "", 3: "",
     4: "", 5: "", 6: "",
@@ -16,58 +24,46 @@ export function birthChartPythagoras(dob) {
 
   for (const d of digits) {
     if (chart[d] !== undefined) {
-      chart[d] += d; // lặp số
+      chart[d] += d;
     }
   }
 
   return chart;
 }
-export function nameChartPythagoras(fullName) {
-  if (!fullName) return null;
-  const name = normalizeName(fullName);
 
-  // từ chữ cái → lấy chữ số, bỏ khoảng trắng
-  const digits = name.split("").map(c => letterMap[c] || "").filter(c => c !== "");
-  // Khởi tạo map 1–9
-  const chart = {
-    1: "", 2: "", 3: "",
-    4: "", 5: "", 6: "",
-    7: "", 8: "", 9: ""
-  };
+export function createNumberChart({
+  dob = null,
+  fullName = null,
+  nickname = null
+}) {
+  if (!dob && !fullName && !nickname) return null;
 
-  for (const d of digits) {
-    if (chart[d] !== undefined) {
-      chart[d] += d; // lặp số
-    }
-  }
+  const dobDigits = extractDigitsFromDob(dob);
+  const nameDigits = extractDigitsFromName(fullName);
+  const nickDigits = extractDigitsFromName(nickname);
 
-  return chart;
-}
-export function mixedChartPythagoras(fullName, dob) {
-  if (!fullName) return null;
-  const name = normalizeName(fullName);
-
-  // từ chữ cái → lấy chữ số, bỏ khoảng trắng // yyyy-mm-dd → lấy chữ số
-  // const digits = dob.replaceAll("-", "").split("") + name.split("").map(c => letterMap[c] || "").filter(c => c !== "");
   const digits = [
-    ...dob.replaceAll("-", "").split(""),
-    ...name.split("").map(c => letterMap[c] || "").filter(c => c !== "")
+    ...dobDigits,
+    ...nameDigits,
+    ...nickDigits
   ];
-  // Khởi tạo map 1–9
-  const chart = {
-    1: "", 2: "", 3: "",
-    4: "", 5: "", 6: "",
-    7: "", 8: "", 9: ""
+
+  const chart = buildNumberChart(digits);
+
+  return {
+    chart,
+
+    // 🔑 metadata cho bước sau
+    sources: {
+      dob: dobDigits.length > 0,
+      name: nameDigits.length > 0,
+      nickname: nickDigits.length > 0
+    },
+
+    digitCount: digits.length
   };
-
-  for (const d of digits) {
-    if (chart[d] !== undefined) {
-      chart[d] += d; // lặp số
-    }
-  }
-
-  return chart;
 }
+
 export function detectArrows(chart) {
   const arrowsPresent = [];
   const arrowsMissing = [];
@@ -134,3 +130,29 @@ export function detectIslands(chart) {
 
   return islands;
 }
+
+export function buildChartBundle({ dob, fullName, nickname }) {
+  const dobDigits = extractDigitsFromDob(dob);
+  const nameDigits = extractDigitsFromName(fullName);
+  const nickDigits = extractDigitsFromName(nickname);
+
+  const totalChart = buildNumberChart([
+    ...dobDigits,
+    ...nameDigits,
+    ...nickDigits
+  ]);
+
+  return {
+    chart: totalChart,
+
+    layers: {
+      dob: buildNumberChart(dobDigits),
+      name: buildNumberChart(nameDigits),
+      nickname: buildNumberChart(nickDigits)
+    },
+
+    arrows: detectArrows(totalChart),
+    islands: detectIslands(totalChart)
+  };
+}
+

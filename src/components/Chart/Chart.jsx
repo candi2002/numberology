@@ -1,75 +1,160 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowOverlay } from "./ArrowOverlay";
 import { IslandOverlay } from "./IslandOverlay";
+import { buildChartBundle } from "../../numerology/birthChart";
 import "../../App.css";
+
+/* =========================
+   Render cell nhiều màu
+========================= */
+/* `buildChartBundle` is provided by `src/numerology/birthChart` —
+   the implementation here was a duplicate and has been removed. */
+
+function Cell({ num, layers, highlighted, highlightType }) {
+  const hasValue =
+    layers.dob[num] || layers.name[num] || layers.nickname[num];
+
+  if (!hasValue) {
+    return <div className="grid-cell empty" />;
+  }
+
+  return (
+    <div
+      className={`grid-cell ${
+        highlighted
+          ? highlightType === "present"
+            ? "highlight-present"
+            : "highlight-missing"
+          : ""
+      }`}
+    >
+      <div className="cell-digits">
+        {layers.dob[num] && (
+          <span className="digit digit-dob">{layers.dob[num]}</span>
+        )}
+        {layers.name[num] && (
+          <span className="digit digit-name">{layers.name[num]}</span>
+        )}
+        {layers.nickname[num] && (
+          <span className="digit digit-nickname">
+            {layers.nickname[num]}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+
+/* =========================
+   MAIN COMPONENT
+========================= */
 export function NumberChart({
   chartName,
   chart,
+  layers,
   arrows,
-  islands
+  islands,
+  addNickname,
+  setAddNickname,
+  savedNickname,
+  setSavedNickname
 }) {
   const [hoverArrow, setHoverArrow] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   const [showPresent, setShowPresent] = useState(true);
   const [showMissing, setShowMissing] = useState(true);
   const [showIslands, setShowIslands] = useState(true);
+
+  const [nickname, setNickname] = useState("");
+
+  useEffect(() => {
+    setNickname(savedNickname || "");
+  }, [savedNickname]);
+
   const isHighlighted = (num) =>
     hoverArrow && hoverArrow.nums.includes(num);
+
   return (
     <>
-              {/* TOGGLE */}
+      {/* ================= TOGGLE ================= */}
       <div className="toggle-group">
-                <button
-                  className={`toggle-btn ${showPresent ? "active" : ""}`}
-                  onClick={() => setShowPresent(p => !p)}
-                >
-                  {showPresent ? "Ẩn mũi tên có" : "Hiện mũi tên có"}
-                </button>
-                <button
-                  className={`toggle-btn ${showMissing ? "active" : ""}`}
-                  onClick={() => setShowMissing(p => !p)}
-                >
-                  {showMissing ? "Ẩn mũi tên thiếu" : "Hiện mũi tên thiếu"}
-                </button>
-                
-                <button
-                  className={`toggle-btn ${showIslands ? "active" : ""}`}
-                  onClick={() => setShowIslands(p => !p)}
-                >
-                  {showIslands ? "Ẩn ốc đảo" : "Hiện ốc đảo"} 
-        
-                </button>
-                <button
-                  className={`toggle-btn ${showMissing ? "active" : ""}`}
-                  onClick={() => setShowMissing(p => !p)}
-                >
-                  {showMissing ? "Ẩn mũi tên thiếu" : "Hiện mũi tên thiếu"}
-                </button>
+        <button
+          className={`toggle-btn ${showPresent ? "active" : ""}`}
+          onClick={() => setShowPresent(p => !p)}
+        >
+          {showPresent ? "Ẩn mũi tên có" : "Hiện mũi tên có"}
+        </button>
+
+        <button
+          className={`toggle-btn ${showMissing ? "active" : ""}`}
+          onClick={() => setShowMissing(p => !p)}
+        >
+          {showMissing ? "Ẩn mũi tên thiếu" : "Hiện mũi tên thiếu"}
+        </button>
+
+        <button
+          className={`toggle-btn ${showIslands ? "active" : ""}`}
+          onClick={() => setShowIslands(p => !p)}
+        >
+          {showIslands ? "Ẩn ốc đảo" : "Hiện ốc đảo"}
+        </button>
+
+        <button
+          className={`toggle-btn ${addNickname ? "active" : ""}`}
+          onClick={() => setAddNickname(p => !p)}
+        >
+          {addNickname ? "Ẩn nickname" : "Hiện nickname"}
+        </button>
       </div>
 
       <h3>Biểu đồ {chartName}</h3>
 
-      {/* KHUNG CĂN GIỮA */}
+      {/* ================= WRAPPER ================= */}
       <div className="chart-wrapper">
-        {/* BIỂU ĐỒ */}
+        {/* ===== Nickname box ===== */}
+        <div className={`chart-nickname ${addNickname ? "show" : "hide"}`}>
+          <label className="nickname-label">Nickname</label>
+
+          <input
+            type="text"
+            className="nickname-input"
+            placeholder="Nhập nickname..."
+            value={nickname}
+            onChange={e => setNickname(e.target.value)}
+          />
+
+          <button
+            className="nickname-save-btn"
+            onClick={() => setSavedNickname(nickname.trim())}
+          >
+            Lưu
+          </button>
+
+          {savedNickname && (
+            <div className="nickname-saved">
+              Đã lưu: <strong>{savedNickname}</strong>
+            </div>
+          )}
+        </div>
+
+        {/* ================= CHART ================= */}
         <div className="chart-left">
           <div className="birth-chart">
             <div className="grid">
-              {[3,6,9,2,5,8,1,4,7].map(num => (
-                <div
+              {[3, 6, 9, 2, 5, 8, 1, 4, 7].map(num => (
+                <Cell
                   key={num}
-                  className={`grid-cell ${
-                    isHighlighted(num)
-                      ? hoverArrow.type === "present"
-                        ? "highlight-present"
-                        : "highlight-missing"
-                      : ""
-                  }`}
-                >
-                  {chart[num]}
-                </div>
+                  num={num}
+                  layers={layers}
+                  highlighted={isHighlighted(num)}
+                  highlightType={hoverArrow?.type}
+                />
               ))}
             </div>
+
 
             <ArrowOverlay
               arrowsPresent={showPresent ? arrows.arrowsPresent : []}
@@ -81,7 +166,10 @@ export function NumberChart({
             {hoverArrow && (
               <div
                 className={`arrow-tooltip ${hoverArrow.type}`}
-                style={{ top: mousePos.y + 12, left: mousePos.x + 12 }}
+                style={{
+                  top: mousePos.y + 12,
+                  left: mousePos.x + 12
+                }}
               >
                 {hoverArrow.label}
               </div>
@@ -91,7 +179,7 @@ export function NumberChart({
           </div>
         </div>
 
-        {/* DANH SÁCH MŨI TÊN */}
+        {/* ================= LIST ================= */}
         <div className="chart-right">
           <h4>Danh sách mũi tên</h4>
           <ul className="arrow-list">
@@ -119,71 +207,68 @@ export function NumberChart({
         </div>
       </div>
     </>
-
   );
 }
-export default function ChartToggle({ result }) {
+
+ 
+
+export default function ChartToggle({ dob, name }) {
+  if (!dob && !name) return null;
+
   const [chartType, setChartType] = useState("birth");
+  const [addNickname, setAddNickname] = useState(false);
+  const [savedNickname, setSavedNickname] = useState("");
 
-  if (!result) return null;
+  const effectiveNickname =
+    addNickname && savedNickname ? savedNickname : null;
 
-  const chartMap = {
-    birth: {
-      name: "Ngày sinh",
-      chart: result.birthChart,
-      arrows: result.arrows,
-      islands: result.islands
-    },
-    name: {
-      name: "Tên",
-      chart: result.nameChart,
-      arrows: result.nameArrows,
-      islands: result.nameIslands
-    },
-    mixed: {
-      name: "Hỗn hợp",
-      chart: result.mixedChart,
-      arrows: result.mixedArrows,
-      islands: result.mixedIslands
-    }
+  const charts = {
+    birth: buildChartBundle({
+      dob,
+      fullName: null,
+      nickname: effectiveNickname
+    }),
+    name: buildChartBundle({
+      dob: null,
+      fullName: name,
+      nickname: effectiveNickname
+    }),
+    mixed: buildChartBundle({
+      dob,
+      fullName: name,
+      nickname: effectiveNickname
+    })
   };
 
-  const current = chartMap[chartType];
+  const current = charts[chartType];
+  if (!current) return null;
 
   return (
     <>
-      {/* TOGGLE BUTTON */}
       <div className="chart-switch">
-        <button
-          className={chartType === "birth" ? "active" : ""}
-          onClick={() => setChartType("birth")}
-        >
-          Ngày sinh
-        </button>
-
-        <button
-          className={chartType === "name" ? "active" : ""}
-          onClick={() => setChartType("name")}
-        >
-          Tên
-        </button>
-
-        <button
-          className={chartType === "mixed" ? "active" : ""}
-          onClick={() => setChartType("mixed")}
-        >
-          Hỗn hợp
-        </button>
+        <button onClick={() => setChartType("birth")}>Ngày sinh</button>
+        <button onClick={() => setChartType("name")}>Tên</button>
+        <button onClick={() => setChartType("mixed")}>Hỗn hợp</button>
       </div>
 
-
-
       <NumberChart
-        chartName={current.name}
+        chartName={
+          chartType === "birth"
+            ? "Ngày sinh"
+            : chartType === "name"
+            ? "Tên"
+            : "Hỗn hợp"
+        }
         chart={current.chart}
+        layers={current.layers}   // ⬅️ DÒNG QUYẾT ĐỊNH
         arrows={current.arrows}
         islands={current.islands}
+        addNickname={addNickname}
+        setAddNickname={setAddNickname}
+        savedNickname={savedNickname}
+        setSavedNickname={setSavedNickname}
       />
     </>
   );
 }
+

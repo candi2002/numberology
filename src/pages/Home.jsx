@@ -71,10 +71,8 @@ export default function Home() {
                 <div><span>Số khuyết thiếu</span><b>{result.missingNameNumbers.join(", ")}</b></div>
               </div>
               {/* Button toggle loại chart */}
-              <ChartToggle result={result} />
+              <ChartToggle dob={dob} name={name} />
 
-
-              
               {/* PYRAMID */}
               <h3>Chu kỳ Kim Tự Tháp 27 năm</h3>
               <div className="pyramid">
