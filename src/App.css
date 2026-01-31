@@ -1,0 +1,355 @@
+/* =========================
+   RESET + BASE
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* =========================
+   APP LAYOUT
+========================= */
+.app {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 22px;
+  margin-top: 28px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-top: 22px;
+}
+
+h4 {
+  font-size: 16px;
+  margin-top: 18px;
+}
+
+/* =========================
+   FORM
+========================= */
+input[type="text"],
+input[type="date"] {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #c7d2fe;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #6366f1;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4f46e5;
+}
+
+button + button {
+  margin-left: 8px;
+}
+
+/* =========================
+   RESULT BLOCK
+========================= */
+.result {
+  margin-top: 24px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.result p {
+  margin: 4px 0;
+}
+
+/* =========================
+   BIRTH CHART
+========================= */
+.birth-chart {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin-top: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(3, 80px);
+  border: 2px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grid-cell {
+  border: 1px solid #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  background: white;
+  transition: background 0.15s ease;
+}
+
+.grid-cell.highlight-present {
+  background: #bbf7d0;
+}
+
+.grid-cell.highlight-missing {
+  background: #fecaca;
+}
+
+/* =========================
+   ARROWS
+========================= */
+svg {
+  user-select: none;
+}
+
+.arrow-tooltip {
+  position: fixed;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: white;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.arrow-tooltip.present {
+  background: #22c55e;
+}
+
+.arrow-tooltip.missing {
+  background: #ef4444;
+}
+
+/* =========================
+   ARROW LIST
+========================= */
+ul {
+  padding-left: 18px;
+}
+
+ul li {
+  margin-bottom: 4px;
+}
+
+/* =========================
+   PYRAMID 27 YEARS
+========================= */
+.pyramid {
+  margin-top: 16px;
+}
+
+.pyramid svg {
+  background: linear-gradient(180deg, #eef2ff, #ffffff);
+  border-radius: 14px;
+}
+
+.pyramid circle {
+  fill: #e9d5ff;
+  stroke: #7c3aed;
+  stroke-width: 2;
+}
+
+.pyramid text {
+  fill: #1e293b;
+  font-weight: 600;
+}
+
+.pyramid line {
+  stroke-width: 2;
+  stroke: #2563eb;
+}
+
+/* =========================
+   CSV BUTTON
+========================= */
+/* button:last-of-type {
+  margin-top: 20px;
+  background: #0ea5e9;
+}
+
+button:last-of-type:hover {
+  background: #0284c7;
+} */
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .birth-chart {
+    transform: scale(0.9);
+  }
+
+  .pyramid svg {
+    width: 100%;
+    height: auto;
+  }
+}
+/* =========================
+   FORM CARD
+========================= */
+.form-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   INFO + NUMBERS
+========================= */
+.info-block {
+  margin-bottom: 12px;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+.number-grid div {
+  background: #eef2ff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.number-grid span {
+  font-size: 13px;
+  color: #475569;
+}
+
+.number-grid b {
+  font-size: 18px;
+  color: #1e293b;
+}
+
+/* =========================
+   TOGGLE
+========================= */
+.toggle-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.toggle-btn {
+  /* RESET HOÀN TOÀN */
+  all: unset;
+  box-sizing: border-box;
+
+  /* KHÔI PHỤC HÀNH VI BUTTON */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* KÍCH THƯỚC CỐ ĐỊNH */
+  width: 180px;
+  height: 41px;
+
+  /* STYLE */
+  border-radius: 10px;
+  border: 2px solid #c7d2fe;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.toggle-btn:hover {
+  border-color: #6366f1;
+}
+
+.toggle-btn:active {
+  transform: scale(0.97);
+}
+
+.toggle-btn.active {
+  background: #6366f1;
+  color: #fff;
+  border-color: #4f46e5;
+}
+
+
+
+/* =========================
+   ARROW LIST
+========================= */
+.arrow-list li {
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.arrow-list li.present {
+  color: #16a34a;
+}
+
+.arrow-list li.missing {
+  color: #dc2626;
+}
+
+/* =========================
+   META
+========================= */
+.timestamp {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 12px;
+}
+
+.csv-btn {
+  margin-top: 24px;
+}
+
+/* =========================
+   ERROR
+========================= */
+.error {
+  color: #dc2626;
+  font-weight: 600;
+}
