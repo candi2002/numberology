@@ -5,6 +5,16 @@ import NumerologyPyramid from '../components/Pyramid/NumerologyPyramid';
 import { downloadCSV } from '../utils/csv';
 import ChartToggle from '../components/Chart/Chart';
 
+function renderKarmicNumber(value) {
+  if (value >= 0) return <b>{value}</b>;
+
+  return (
+    <b>
+      {Math.abs(value)}
+      <span className="karmic-debt"> nợ nghiệp</span>
+    </b>
+  );
+}
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -60,19 +70,22 @@ export default function Home() {
 
               {/* NUMBERS */}
               <div className="number-grid">
-                <div><span>Số đường đời</span><b>{result.lifePathNumber}</b></div>
-                <div><span>Số định mệnh</span><b>{result.destinyNumber}</b></div>
-                <div><span>Số ngày sinh</span><b>{result.birthdayNumber}</b></div>
-                <div><span>Số linh hồn</span><b>{result.soulUrgeNumber}</b></div>
-                <div><span>Số tính cách</span><b>{result.personalityNumber}</b></div>
-                <div><span>Số nội cảm</span><b>{result.innerSelfNumber}</b></div>
+                {/* Cái này tôi muốn nếu 7 số đầu dương thì để  y vậy, nhưng nếu âm thì đổi sang dương thêm đằng sau số chữ "nợ nghiệp" nhỏ thui, bằng 1/3 bình thường*/}
+                
+                <div><span>Số đường đời</span>{renderKarmicNumber(result.lifePathNumber)}</div>
+                <div><span>Số định mệnh</span>{renderKarmicNumber(result.destinyNumber)}</div>
+                <div><span>Số ngày sinh</span>{renderKarmicNumber(result.birthdayNumber)}</div>
+                <div><span>Số linh hồn</span>{renderKarmicNumber(result.soulUrgeNumber)}</div>
+                <div><span>Số tính cách</span>{renderKarmicNumber(result.personalityNumber)}</div>
+                <div><span>Số trưởng thành</span>{renderKarmicNumber(result.maturityNumber)}</div>
+                <div><span>Số nội cảm</span>{renderKarmicNumber(result.innerSelfNumber)}</div>
+
+
                 <div><span>Số cân bằng</span><b>{result.balanceNumber}</b></div>
                 <div><span>Số tiềm thức</span><b>{result.subconsciousNumber}</b></div>
-
                 <div><span>Số khuyết thiếu</span><b>{result.missingNameNumbers.join(", ")}</b></div>
                 <div><span>Số đam mê</span><b>{result.passionNumber}</b></div>
                 <div><span>Số bảo mật</span><b>{result.confidentialNumber}</b></div>
-                <div><span>Số trưởng thành</span><b>{result.maturityNumber}</b></div>
                 <div><span>Số kết nối</span><b>{result.connectionNumber}</b></div>
               
               </div>

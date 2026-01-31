@@ -1,0 +1,492 @@
+/* =====================================================
+   1. RESET + BASE
+===================================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+
+/* =====================================================
+   2. APP LAYOUT + TYPOGRAPHY
+===================================================== */
+.app {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 22px;
+  margin-top: 28px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-top: 22px;
+}
+
+h4 {
+  font-size: 16px;
+  margin-top: 18px;
+}
+
+
+/* =====================================================
+   3. FORM + INPUT + BUTTON
+===================================================== */
+input[type="text"],
+input[type="date"] {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #c7d2fe;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  background: #6366f1;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4f46e5;
+}
+
+button + button {
+  margin-left: 8px;
+}
+
+/* Form card */
+.form-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+
+/* =====================================================
+   4. RESULT / INFO BLOCKS
+===================================================== */
+.result {
+  margin-top: 24px;
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.result p {
+  margin: 4px 0;
+}
+
+.info-block {
+  margin-bottom: 12px;
+}
+
+
+/* =====================================================
+   5. NUMBER GRID (NUMEROLOGY RESULT)
+===================================================== */
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+.number-grid div {
+  background: #eef2ff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.number-grid span {
+  font-size: 13px;
+  color: #475569;
+}
+
+.number-grid b {
+  font-size: 18px;
+  color: #1e293b;
+}
+
+/* karmic debt note */
+.karmic-debt {
+  font-size: 0.2em;
+  font-weight: normal;
+  opacity: 0.7;
+  margin-left: 4px;
+  vertical-align: baseline;
+}
+
+
+/* =====================================================
+   6. CHART LAYOUT (WRAPPER / COLUMNS)
+===================================================== */
+.chart-wrapper {
+  display: grid;
+  grid-template-columns: 220px auto 260px;
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 0;
+  align-items: flex-start;
+}
+
+.chart-left {
+  flex: 0 0 auto;
+}
+
+.chart-right {
+  flex: 1;
+  min-width: 220px;
+}
+
+.chart-right .arrow-list {
+  margin-top: 8px;
+}
+
+
+/* =====================================================
+   7. BIRTH CHART GRID
+===================================================== */
+.birth-chart {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin-top: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(3, 80px);
+  border: 2px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.grid-cell {
+  border: 1px solid #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  background: white;
+  transition: background 0.15s ease;
+}
+
+.grid-cell.highlight-present {
+  background: #bbf7d0;
+}
+
+.grid-cell.highlight-missing {
+  background: #fecaca;
+}
+
+
+/* =====================================================
+   8. CELL DIGITS (DOB / NAME / NICKNAME)
+===================================================== */
+.cell-digits {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.digit {
+  font-weight: 600;
+}
+
+.digit-dob {
+  color: #4caf50;
+}
+
+.digit-name {
+  color: #2196f3;
+}
+
+.digit-nickname {
+  color: #ff9800;
+}
+
+
+/* =====================================================
+   9. ARROWS + TOOLTIP
+===================================================== */
+svg {
+  user-select: none;
+}
+
+.arrow-tooltip {
+  position: fixed;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: white;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+.arrow-tooltip.present {
+  background: #22c55e;
+}
+
+.arrow-tooltip.missing {
+  background: #ef4444;
+}
+
+
+/* =====================================================
+   10. ARROW LIST
+===================================================== */
+ul {
+  padding-left: 18px;
+}
+
+.arrow-list li {
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.arrow-list li.present {
+  color: #16a34a;
+}
+
+.arrow-list li.missing {
+  color: #dc2626;
+}
+
+
+/* =====================================================
+   11. TOGGLE BUTTONS
+===================================================== */
+.toggle-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.toggle-btn {
+  all: unset;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 180px;
+  height: 41px;
+
+  border-radius: 10px;
+  border: 2px solid #c7d2fe;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.toggle-btn:hover {
+  border-color: #6366f1;
+}
+
+.toggle-btn:active {
+  transform: scale(0.97);
+}
+
+.toggle-btn.active {
+  background: #6366f1;
+  color: #fff;
+  border-color: #4f46e5;
+}
+
+
+/* =====================================================
+   12. CHART TYPE SWITCH
+===================================================== */
+.chart-switch {
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  height: 44px;
+  margin: 16px auto;
+
+  border: 2px solid #000;
+  border-radius: 12px;
+  background: #f3f3f3;
+  overflow: hidden;
+}
+
+.chart-switch button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  color: #666;
+}
+
+.chart-switch button.active {
+  background: #1fffcb;
+  color: #000;
+}
+
+.chart-switch button:not(.active):hover {
+  background: rgba(70, 255, 215, 0.5);
+}
+
+
+/* =====================================================
+   13. NICKNAME PANEL
+===================================================== */
+.chart-nickname {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nickname-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.nickname-input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.nickname-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.nickname-save-btn {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #f59e0b;
+  color: #111;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nickname-save-btn:hover:not(:disabled) {
+  background: #d97706;
+}
+
+.nickname-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nickname-saved {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #16a34a;
+}
+
+
+/* =====================================================
+   14. PYRAMID (27 YEARS)
+===================================================== */
+.pyramid {
+  margin-top: 16px;
+}
+
+.pyramid svg {
+  background: linear-gradient(180deg, #eef2ff, #ffffff);
+  border-radius: 14px;
+}
+
+.pyramid circle {
+  fill: #e9d5ff;
+  stroke: #7c3aed;
+  stroke-width: 2;
+}
+
+.pyramid text {
+  fill: #1e293b;
+  font-weight: 600;
+}
+
+.pyramid line {
+  stroke-width: 2;
+  stroke: #2563eb;
+}
+
+
+/* =====================================================
+   15. META + ERROR
+===================================================== */
+.timestamp {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 12px;
+}
+
+.csv-btn {
+  margin-top: 24px;
+}
+
+.error {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   16. RESPONSIVE
+===================================================== */
+@media (max-width: 768px) {
+  .birth-chart {
+    transform: scale(0.9);
+  }
+
+  .pyramid svg {
+    width: 100%;
+    height: auto;
+  }
+}

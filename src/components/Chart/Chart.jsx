@@ -1,9 +1,26 @@
+/**
+ * src/components/Chart/Chart.jsx
+ *
+ * Presentational components for rendering numerology charts.
+ * This file contains:
+ *  - `Cell` (internal): renders one cell of the 3x3 grid with layered
+ *    digits for dob, name and nickname.
+ *  - `NumberChart` (named export): UI for the grid, overlays, toggles,
+ *    nickname input and arrow list.
+ *  - `ChartToggle` (default export): selects which chart bundle to use
+ *    (birth, name, or mixed) and supplies data to `NumberChart`.
+ *
+ * Implementation note: chart-building and analysis logic (digit extraction,
+ * number chart construction, arrow/island detection) live in
+ * `src/numerology/birthChart`. This file is intentionally presentational
+ * and must not duplicate that logic.
+ */
+
 import { useState, useEffect } from "react";
+import { buildChartBundle } from "../../numerology/birthChart";
 import { ArrowOverlay } from "./ArrowOverlay";
 import { IslandOverlay } from "./IslandOverlay";
-import { buildChartBundle } from "../../numerology/birthChart";
 import "../../App.css";
-
 
 function Cell({ num, layers, highlighted, highlightType }) {
   const hasValue =
@@ -60,6 +77,23 @@ export function NumberChart({
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const [showPresent, setShowPresent] = useState(true);
+  /**
+   * src/components/Chart/Chart.jsx
+   *
+   * Presentational components for rendering numerology charts.
+   * This file contains:
+   *  - `Cell` (internal): renders one cell of the 3x3 grid with layered
+   *    digits for dob, name and nickname.
+   *  - `NumberChart` (named export): UI for the grid, overlays, toggles,
+   *    nickname input and arrow list.
+   *  - `ChartToggle` (default export): selects which chart bundle to use
+   *    (birth, name, or mixed) and supplies data to `NumberChart`.
+   *
+   * Implementation note: chart-building and analysis logic (digit extraction,
+   * number chart construction, arrow/island detection) live in
+   * `src/numerology/birthChart`. This file is intentionally presentational
+   * and must not duplicate that logic.
+   */
   const [showMissing, setShowMissing] = useState(true);
   const [showIslands, setShowIslands] = useState(true);
 
