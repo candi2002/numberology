@@ -65,6 +65,8 @@ export default function Home() {
                 <div><span>Số nội cảm</span><b>{result.innerSelfNumber}</b></div>
                 <div><span>Số cân bằng</span><b>{result.balanceNumber}</b></div>
                 <div><span>Số tiềm thức</span><b>{result.subconsciousNumber}</b></div>
+                <div><span>Số sinh nhật</span><b>{result.birthdayNumber}</b></div>
+                <div><span>Số khuyết thiếu</span><b>{result.missingNumbers.join(", ")}</b></div>
               </div>
 
               {/* BIRTH CHART */}

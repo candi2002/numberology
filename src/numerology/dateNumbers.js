@@ -18,4 +18,11 @@ export function calculateInnerSelfNumber(dob) {
 
   return reduceToOneDigit(day + month);
 }
+export function calculateBirthdayNumber(dob) {
+  if (!dob) return null;
+  // dob = "yyyy-mm-dd"
+  const day = Number(dob.split("-")[2]);
+  return reduceToOneDigit(day);
+}
+
 

@@ -3,7 +3,8 @@ import {
   calculateSoulNumber,
   calculatePersonalityNumber,
   calculateBalanceNumber,
-  calculateSubconsciousNumber
+  calculateSubconsciousNumber,
+  calculateBirthdayNumber
 } from "./nameNumbers";
 
 import * as DateNum from "./dateNumbers";
@@ -19,11 +20,17 @@ export function calculateNumerology(name, dob) {
     const soulUrgeNumber = calculateSoulNumber(name);
     const personalityNumber = calculatePersonalityNumber(name);
     const innerSelfNumber = DateNum.calculateInnerSelfNumber(dob);
+    const birthdayNumber = DateNum.calculateBirthdayNumber(dob);
     const balanceNumber = calculateBalanceNumber(name);
     const subconsciousNumber = calculateSubconsciousNumber(name);
     const birthChart = birthChartPythagoras(dob);
     const arrows = detectArrows(birthChart);
     const islands = detectIslands(birthChart);
+    const missingNumbers = DateNum.findMissingNumbers(dob);
+
+    
+    
+    
 
 
 
@@ -35,11 +42,13 @@ export function calculateNumerology(name, dob) {
     soulUrgeNumber,
     personalityNumber,
     innerSelfNumber,
+    birthdayNumber,
     balanceNumber,
     subconsciousNumber,
     birthChart,
     arrows,
     islands,
+    missingNumbers,
     createAt: new Date().toISOString()
   };
 }

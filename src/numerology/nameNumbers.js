@@ -72,3 +72,18 @@ export function calculateSubconsciousNumber(fullName) {
 
   return used.size; // 1–9
 }
+//So khuyet thieu
+export function calculateMissingNumbers(fullName) {
+  const name = normalizeName(fullName);
+  const used = new Set();
+  for (let char of name) {
+    used.add(letterMap[char]);
+  } 
+  const missing = [];
+  for (let i = 1; i <= 9; i++) {
+    if (!used.has(i)) {
+      missing.push(i);
+    }
+  }
+  return missing;
+} 
