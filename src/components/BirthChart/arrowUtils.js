@@ -16,40 +16,40 @@ export const CELL_POS = {
   7: [2,2], 8: [1,2], 9: [0,2]
 };
 
-export function detectArrows(chart) {
-  const arrowsPresent = [];
-  const arrowsMissing = [];
+// export function detectArrows(chart) {
+//   const arrowsPresent = [];
+//   const arrowsMissing = [];
 
-  for (const arrow of ARROWS) {
-    const hasAll = arrow.nums.every(n => chart[n].length > 0);
-    const hasNone = arrow.nums.every(n => chart[n].length === 0);
+//   for (const arrow of ARROWS) {
+//     const hasAll = arrow.nums.every(n => chart[n].length > 0);
+//     const hasNone = arrow.nums.every(n => chart[n].length === 0);
 
-    const [a, b, c] = arrow.nums;
-    const [row1, col1] = CELL_POS[a];
-    const [row3, col3] = CELL_POS[c];
+//     const [a, b, c] = arrow.nums;
+//     const [row1, col1] = CELL_POS[a];
+//     const [row3, col3] = CELL_POS[c];
 
-    const arrowData = {
-      ...arrow,
-      from: { x: col1 * 80 + 40, y: row1 * 80 + 40 },
-      to:   { x: col3 * 80 + 40, y: row3 * 80 + 40 }
-    };
+//     const arrowData = {
+//       ...arrow,
+//       from: { x: col1 * 80 + 40, y: row1 * 80 + 40 },
+//       to:   { x: col3 * 80 + 40, y: row3 * 80 + 40 }
+//     };
 
-    if (hasAll) {
-      arrowsPresent.push({
-        ...arrowData,
-        label: arrow.present,
-        type: "present"
-      });
-    }
+//     if (hasAll) {
+//       arrowsPresent.push({
+//         ...arrowData,
+//         label: arrow.present,
+//         type: "present"
+//       });
+//     }
 
-    if (hasNone) {
-      arrowsMissing.push({
-        ...arrowData,
-        label: arrow.missing,
-        type: "missing"
-      });
-    }
-  }
+//     if (hasNone) {
+//       arrowsMissing.push({
+//         ...arrowData,
+//         label: arrow.missing,
+//         type: "missing"
+//       });
+//     }
+//   }
 
-  return { arrowsPresent, arrowsMissing };
-}
+//   return { arrowsPresent, arrowsMissing };
+// }

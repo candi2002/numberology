@@ -10,7 +10,7 @@ export const letterMap = {
   I:9, R:9
 };
 
-export const VOWELS = ["A", "E", "I", "O", "U", "Y"];
+export const VOWELS = ["A", "E", "I", "O", "U"];
 
 export const ARROWS = [
   { key: "123", nums: [1,2,3], present: "Mũi tên Kế hoạch", missing: null },
