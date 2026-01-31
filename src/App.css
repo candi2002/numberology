@@ -315,6 +315,46 @@ button:last-of-type:hover {
   border-color: #4f46e5;
 }
 
+/* =========================
+Toggle chart switch
+========================= */
+.chart-switch {
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  height: 44px;
+  margin: 16px auto;
+  border: #000 2px solid;
+
+  border-radius: 12px;
+  background: #f3f3f3;
+  overflow: hidden;
+}
+
+/* NÚT */
+.chart-switch button {
+  flex: 1;                 /* ✅ mỗi nút = 33% */
+  border: none;
+  background: transparent;
+
+  font-weight: 600;
+  cursor: pointer;
+  color: #666;
+
+  /* transition: background 0.2s ease, color 0.2s ease; */
+}
+
+/* NÚT ĐANG CHỌN */
+.chart-switch button.active {
+  background: #00ffc3;
+  color: #000;
+}
+
+/* hover nhẹ */
+.chart-switch button:not(.active):hover {
+  background: rgba(70, 255, 215, 0.5);
+}
+
 
 
 /* =========================
@@ -352,4 +392,32 @@ button:last-of-type:hover {
 .error {
   color: #dc2626;
   font-weight: 600;
+}
+
+/* Khung tổng – căn giữa màn hình */
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 0;
+}
+
+/* Cột trái: biểu đồ */
+.chart-left {
+  flex: 0 0 auto;
+}
+
+/* Cột phải: danh sách mũi tên */
+.chart-right {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* Danh sách gọn gàng hơn */
+.chart-right .arrow-list {
+  margin-top: 8px;
 }

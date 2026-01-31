@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import '../App.css'
 import { calculateNumerology } from "../numerology/index";
-import BirthChart from '../components/BirthChart/BirthChart';
 import NumerologyPyramid from '../components/Pyramid/NumerologyPyramid';
 import { downloadCSV } from '../utils/csv';
+import ChartToggle from '../components/Chart/Chart';
 
 
 export default function Home() {
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [result, setResult] = useState(null);
+
+
 
   return (
     <div className="app">
@@ -66,16 +68,13 @@ export default function Home() {
                 <div><span>Số cân bằng</span><b>{result.balanceNumber}</b></div>
                 <div><span>Số tiềm thức</span><b>{result.subconsciousNumber}</b></div>
                 <div><span>Số sinh nhật</span><b>{result.birthdayNumber}</b></div>
-                <div><span>Số khuyết thiếu</span><b>{result.missingNumbers.join(", ")}</b></div>
+                <div><span>Số khuyết thiếu</span><b>{result.missingNameNumbers.join(", ")}</b></div>
               </div>
+              {/* Button toggle loại chart */}
+              <ChartToggle result={result} />
 
-              {/* BIRTH CHART */}
-              <BirthChart
-                chart={result.birthChart}
-                arrows={result.arrows}
-                islands={result.islands}
-              />
-  
+
+              
               {/* PYRAMID */}
               <h3>Chu kỳ Kim Tự Tháp 27 năm</h3>
               <div className="pyramid">

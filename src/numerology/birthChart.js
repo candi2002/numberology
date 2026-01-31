@@ -1,4 +1,5 @@
-import { ARROWS, CELL_POS, NEIGHBORS } from "./constants";
+import { ARROWS, CELL_POS, NEIGHBORS, letterMap } from "./constants";
+import { normalizeName } from "../utils/normalize";
 
 export function birthChartPythagoras(dob) {
   if (!dob) return null;
@@ -21,7 +22,52 @@ export function birthChartPythagoras(dob) {
 
   return chart;
 }
+export function nameChartPythagoras(fullName) {
+  if (!fullName) return null;
+  const name = normalizeName(fullName);
 
+  // từ chữ cái → lấy chữ số, bỏ khoảng trắng
+  const digits = name.split("").map(c => letterMap[c] || "").filter(c => c !== "");
+  // Khởi tạo map 1–9
+  const chart = {
+    1: "", 2: "", 3: "",
+    4: "", 5: "", 6: "",
+    7: "", 8: "", 9: ""
+  };
+
+  for (const d of digits) {
+    if (chart[d] !== undefined) {
+      chart[d] += d; // lặp số
+    }
+  }
+
+  return chart;
+}
+export function mixedChartPythagoras(fullName, dob) {
+  if (!fullName) return null;
+  const name = normalizeName(fullName);
+
+  // từ chữ cái → lấy chữ số, bỏ khoảng trắng // yyyy-mm-dd → lấy chữ số
+  // const digits = dob.replaceAll("-", "").split("") + name.split("").map(c => letterMap[c] || "").filter(c => c !== "");
+  const digits = [
+    ...dob.replaceAll("-", "").split(""),
+    ...name.split("").map(c => letterMap[c] || "").filter(c => c !== "")
+  ];
+  // Khởi tạo map 1–9
+  const chart = {
+    1: "", 2: "", 3: "",
+    4: "", 5: "", 6: "",
+    7: "", 8: "", 9: ""
+  };
+
+  for (const d of digits) {
+    if (chart[d] !== undefined) {
+      chart[d] += d; // lặp số
+    }
+  }
+
+  return chart;
+}
 export function detectArrows(chart) {
   const arrowsPresent = [];
   const arrowsMissing = [];

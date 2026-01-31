@@ -1,35 +1,36 @@
-import {
-  calculateDestinyNumber,
-  calculateSoulNumber,
-  calculatePersonalityNumber,
-  calculateBalanceNumber,
-  calculateSubconsciousNumber,
-  calculateBirthdayNumber
-} from "./nameNumbers";
-
+import * as NameNum from "./nameNumbers";
 import * as DateNum from "./dateNumbers";
-import { birthChartPythagoras, detectArrows, detectIslands } from "./birthChart";
-
+import * as BC from "./birthChart";
+// import * as NC from "./nameChart";
 export function calculateNumerology(name, dob) {
   if (!name || !dob) {
     return null; // ❗ chỉ return data
   }
-
-    const lifePathNumber = DateNum.calculateLifePathNumber(dob);
-    const destinyNumber = calculateDestinyNumber(name);
-    const soulUrgeNumber = calculateSoulNumber(name);
-    const personalityNumber = calculatePersonalityNumber(name);
+    // DATE NUMBERS
     const innerSelfNumber = DateNum.calculateInnerSelfNumber(dob);
     const birthdayNumber = DateNum.calculateBirthdayNumber(dob);
-    const balanceNumber = calculateBalanceNumber(name);
-    const subconsciousNumber = calculateSubconsciousNumber(name);
-    const birthChart = birthChartPythagoras(dob);
-    const arrows = detectArrows(birthChart);
-    const islands = detectIslands(birthChart);
-    const missingNumbers = DateNum.findMissingNumbers(dob);
+    const lifePathNumber = DateNum.calculateLifePathNumber(dob);
+    // NAME NUMBERS
+    const destinyNumber = NameNum.calculateDestinyNumber(name);
+    const soulUrgeNumber = NameNum.calculateSoulNumber(name);
+    const personalityNumber = NameNum.calculatePersonalityNumber(name);
+    const balanceNumber = NameNum.calculateBalanceNumber(name);
+    const subconsciousNumber = NameNum.calculateSubconsciousNumber(name);
+    const missingNameNumbers = NameNum.calculateMissingNumbers(name);
+    // BIRTH CHART
+    const birthChart = BC.birthChartPythagoras(dob);
+    const arrows = BC.detectArrows(birthChart);
+    const islands = BC.detectIslands(birthChart);
+    
+    // NAME CHART
+    const nameChart = BC.nameChartPythagoras(name);
+    const nameArrows = BC.detectArrows(nameChart);
+    const nameIslands = BC.detectIslands(nameChart);
 
-    
-    
+    //MIXED CHART
+    const mixedChart = BC.mixedChartPythagoras(name, dob);
+    const mixedArrows = BC.detectArrows(mixedChart);
+    const mixedIslands = BC.detectIslands(mixedChart);
     
 
 
@@ -48,7 +49,13 @@ export function calculateNumerology(name, dob) {
     birthChart,
     arrows,
     islands,
-    missingNumbers,
+    missingNameNumbers,
+    nameChart,
+    nameArrows,
+    nameIslands,
+    mixedChart,
+    mixedArrows,
+    mixedIslands,
     createAt: new Date().toISOString()
   };
 }
