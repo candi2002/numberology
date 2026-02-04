@@ -63,6 +63,10 @@ export function createNumberChart({
     digitCount: digits.length
   };
 }
+const toPercent = (row, col) => ({
+  x: ((col + 0.5) / 3) * 100,
+  y: ((row + 0.5) / 3) * 100
+});
 
 export function detectArrows(chart) {
   const arrowsPresent = [];
@@ -78,8 +82,8 @@ export function detectArrows(chart) {
 
     const arrowData = {
       ...arrow,
-      from: { x: col1 * 80 + 40, y: row1 * 80 + 40 },
-      to:   { x: col3 * 80 + 40, y: row3 * 80 + 40 }
+      from: toPercent(row1, col1),
+      to:   toPercent(row3, col3)
     };
 
     if (hasAll) {
@@ -102,7 +106,6 @@ export function detectArrows(chart) {
   return { arrowsPresent, arrowsMissing };
 }
 
-
 export function detectIslands(chart) {
   const islands = [];
 
@@ -111,20 +114,18 @@ export function detectIslands(chart) {
 
     const neighbors = NEIGHBORS[n];
     const isolated = neighbors.every(nb => chart[nb].length === 0);
-
     if (!isolated) continue;
 
-    const type =
-      [1,3,7,9].includes(n) ? "corner" : "edge";
+    const type = [1,3,7,9].includes(n) ? "corner" : "edge";
 
     const [row, col] = CELL_POS[n];
-    const cx = col * 80 + 40;
-    const cy = row * 80 + 40;
+
+    const center = toPercent(row, col);
 
     islands.push({
       num: n,
       type,
-      center: { x: cx, y: cy }
+      center
     });
   }
 

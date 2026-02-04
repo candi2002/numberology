@@ -19,10 +19,17 @@ body {
    APP LAYOUT
 ========================= */
 .app {
-  width: 100%;
-  max-width: 1998px;
+  width: 90%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 24px 20px 60px;
+}
+@media screen and (max-width: 768px) {
+  .app {
+    width: 40%;
+    padding: 16px 12px 40px;
+  } 
+  
 }
 
 h1 {
@@ -96,79 +103,56 @@ button + button {
 }
 
 /* =========================
-   BIRTH CHART
+   BIRTH CHART (RESPONSIVE)
 ========================= */
+
 .birth-chart {
   position: relative;
-  width: 240px;
-  height: 240px;
+
+  width: 100%;
+  max-width: 260px;     /* kích thước desktop */
+  aspect-ratio: 1 / 1; /* luôn là hình vuông */
+
   margin-top: 12px;
 }
 
+/* Lưới 3x3 full khung */
 .grid {
+  width: 100%;
+  height: 100%;
+
   display: grid;
-  grid-template-columns: repeat(3, 80px);
-  grid-template-rows: repeat(3, 80px);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
   border: 2px solid #334155;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
 }
 
+/* Ô */
 .grid-cell {
   border: 1px solid #94a3b8;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+
+  font-size: clamp(16px, 3vw, 22px);
   font-weight: bold;
+
   background: white;
   transition: background 0.15s ease;
 }
 
+/* Highlight */
 .grid-cell.highlight-present {
   background: #bbf7d0;
 }
-
 .grid-cell.highlight-missing {
   background: #fecaca;
 }
 
-/* =========================
-   ARROWS
-========================= */
-svg {
-  user-select: none;
-}
-
-.arrow-tooltip {
-  position: fixed;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  color: white;
-  pointer-events: none;
-  z-index: 1000;
-  white-space: nowrap;
-}
-
-.arrow-tooltip.present {
-  background: #22c55e;
-}
-
-.arrow-tooltip.missing {
-  background: #ef4444;
-}
-
-/* =========================
-   ARROW LIST
-========================= */
-ul {
-  padding-left: 18px;
-}
-
-ul li {
-  margin-bottom: 4px;
-}
 
 /* =========================
    PYRAMID 27 YEARS
@@ -233,11 +217,21 @@ ul li {
 
 .number-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   margin: 12px 0 18px;
 }
+@media (max-width: 900px) {
+  .number-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
+/* @media (max-width: 520px) {
+  .number-grid {
+    grid-template-columns: 1fr;
+  }
+} */
 .number-grid div {
   background: #eef2ff;
   border-radius: 12px;
@@ -247,6 +241,7 @@ ul li {
 }
 
 .number-grid span {
+  /* font-size: 30% 13px; */
   font-size: 13px;
   color: #475569;
 }
@@ -295,6 +290,14 @@ ul li {
     transform 0.1s ease;
 }
 
+@media screen  and (max-width: 400px) {
+  .toggle-btn {
+    width: 140px;
+    height: 65px;
+    font-size: 14px;
+  }
+  
+}
 .toggle-btn:hover {
   border-color: #6366f1;
 }
@@ -388,95 +391,61 @@ Toggle chart switch
   font-weight: 600;
 }
 
-/* Khung tổng – căn giữa màn hình */
-.chart-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 32px;
+/* =========================
+   CHART WRAPPER (2 COLUMNS)
+========================= */
 
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px 0;
-}
 .chart-wrapper {
   display: grid;
-  grid-template-columns: 220px auto 260px;
+  grid-template-columns: 280px 1fr;   /* trái cố định, phải linh hoạt */
   gap: 32px;
 
-  max-width: 1100px;
-  margin: 0 auto; /* căn giữa màn hình */
+  max-width: 1000px;
+  margin: 0 auto;
   align-items: flex-start;
 }
 
-
-/* Cột trái: biểu đồ */
-.chart-left {
-  flex: 0 0 auto;
+/* CỘT TRÁI */
+.chart-display {
+  width: 280px;
+  position: relative;
 }
 
-/* Cột phải: danh sách mũi tên */
-.chart-right {
-  flex: 1;
-  min-width: 220px;
-}
-
-/* Danh sách gọn gàng hơn */
-.chart-right .arrow-list {
-  margin-top: 8px;
-}
-.chart-nickname {
+/* CỘT PHẢI */
+.chart-side {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 24px;
 }
 
-.nickname-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #444;
+/* Nickname */
+.chart-nickname {
+  width: 100%;
+  max-width: 260px;
 }
 
-.nickname-input {
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 14px;
+/* Arrow list */
+.chart-arrow {
+  width: 100%;
 }
 
-.nickname-input:focus {
-  outline: none;
-  border-color: #f59e0b;
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
-}
-.nickname-save-btn {
-  margin-top: 6px;
-  padding: 6px 10px;
+/* =========================
+   RESPONSIVE
+========================= */
 
-  background: #f59e0b;
-  color: #111;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
+@media (max-width: 900px) {
+  .chart-wrapper {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
 
-  cursor: pointer;
-  transition: background 0.2s ease;
+  .chart-display,
+  .chart-side {
+    width: 100%;
+    max-width: 360px;
+  }
 }
 
-.nickname-save-btn:hover:not(:disabled) {
-  background: #d97706;
-}
-
-.nickname-save-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.nickname-saved {
-  margin-top: 6px;
-  font-size: 13px;
-  color: #16a34a;
-}
 
 .cell-digits {
   display: flex;
@@ -510,4 +479,29 @@ Toggle chart switch
   opacity: 0.7;
   margin-left: 4px;
   vertical-align: baseline;
+}
+.arrow-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  white-space: nowrap;
+
+  pointer-events: none;
+  z-index: 9999;
+
+  will-change: transform;
+}
+
+.arrow-tooltip.present {
+  background: #22c55e;
+  color: #fff;
+}
+
+.arrow-tooltip.missing {
+  background: #ef4444;
+  color: #fff;
 }

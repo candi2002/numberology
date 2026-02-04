@@ -109,5 +109,5 @@ export function calculatePassionNumber(fullName) {
    //Số bảo mật = số lượng chữ trong tên
 export function calculateConfidentialNumber(fullName) {
   const name = normalizeName(fullName);
-  return name.length;
+  return reduceToOneDigit(name.length);
 }

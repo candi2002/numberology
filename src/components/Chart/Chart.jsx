@@ -1,21 +1,3 @@
-/**
- * src/components/Chart/Chart.jsx
- *
- * Presentational components for rendering numerology charts.
- * This file contains:
- *  - `Cell` (internal): renders one cell of the 3x3 grid with layered
- *    digits for dob, name and nickname.
- *  - `NumberChart` (named export): UI for the grid, overlays, toggles,
- *    nickname input and arrow list.
- *  - `ChartToggle` (default export): selects which chart bundle to use
- *    (birth, name, or mixed) and supplies data to `NumberChart`.
- *
- * Implementation note: chart-building and analysis logic (digit extraction,
- * number chart construction, arrow/island detection) live in
- * `src/numerology/birthChart`. This file is intentionally presentational
- * and must not duplicate that logic.
- */
-
 import { useState, useEffect } from "react";
 import { buildChartBundle } from "../../numerology/birthChart";
 import { ArrowOverlay } from "./ArrowOverlay";
@@ -23,21 +5,17 @@ import { IslandOverlay } from "./IslandOverlay";
 import "../../App.css";
 
 function Cell({ num, layers, highlighted, highlightType }) {
-  const hasValue =
-    layers.dob[num] || layers.name[num] || layers.nickname[num];
+  // const hasValue =
+  //   layers.dob[num] || layers.name[num] || layers.nickname[num];
 
-  if (!hasValue) {
-    return <div className="grid-cell empty" />;
-  }
+  // if (!hasValue) {
+  //   return <div className="grid-cell empty" />;
+  // }
 
   return (
     <div
       className={`grid-cell ${
-        highlighted
-          ? highlightType === "present"
-            ? "highlight-present"
-            : "highlight-missing"
-          : ""
+        highlighted ? (highlightType === "present" ? "highlight-present" : "highlight-missing") : ""
       }`}
     >
       <div className="cell-digits">
@@ -77,23 +55,6 @@ export function NumberChart({
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const [showPresent, setShowPresent] = useState(true);
-  /**
-   * src/components/Chart/Chart.jsx
-   *
-   * Presentational components for rendering numerology charts.
-   * This file contains:
-   *  - `Cell` (internal): renders one cell of the 3x3 grid with layered
-   *    digits for dob, name and nickname.
-   *  - `NumberChart` (named export): UI for the grid, overlays, toggles,
-   *    nickname input and arrow list.
-   *  - `ChartToggle` (default export): selects which chart bundle to use
-   *    (birth, name, or mixed) and supplies data to `NumberChart`.
-   *
-   * Implementation note: chart-building and analysis logic (digit extraction,
-   * number chart construction, arrow/island detection) live in
-   * `src/numerology/birthChart`. This file is intentionally presentational
-   * and must not duplicate that logic.
-   */
   const [showMissing, setShowMissing] = useState(true);
   const [showIslands, setShowIslands] = useState(true);
 
@@ -102,9 +63,22 @@ export function NumberChart({
   useEffect(() => {
     setNickname(savedNickname || "");
   }, [savedNickname]);
+  // const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  const isHighlighted = (num) =>
-    hoverArrow && hoverArrow.nums.includes(num);
+  useEffect(() => {
+    const handleMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  const isHighlighted = (num) => {
+    return (
+      hoverArrow && hoverArrow.nums.includes(num)
+    );
+  }
 
   return (
     <>
@@ -142,100 +116,117 @@ export function NumberChart({
 
       <h3>Biểu đồ {chartName}</h3>
 
-      {/* ================= WRAPPER ================= */}
-      <div className="chart-wrapper">
-        {/* ===== Nickname box ===== */}
-        <div className={`chart-nickname ${addNickname ? "show" : "hide"}`}>
-          <label className="nickname-label">Nickname</label>
+<div className="chart-wrapper">
 
-          <input
-            type="text"
-            className="nickname-input"
-            placeholder="Nhập nickname..."
-            value={nickname}
-            onChange={e => setNickname(e.target.value)}
+  {/* ===== LEFT: CHART ===== */}
+  <div className="chart-display">
+    <div className="birth-chart">
+      <div className="grid">
+        {[3, 6, 9, 2, 5, 8, 1, 4, 7].map(num => (
+          <Cell
+            key={num}
+            num={num}
+            layers={layers}
+            highlighted={isHighlighted(num)}
+            highlightType={hoverArrow?.type}
           />
-
-          <button
-            className="nickname-save-btn"
-            onClick={() => setSavedNickname(nickname.trim())}
-          >
-            Lưu
-          </button>
-
-          {savedNickname && (
-            <div className="nickname-saved">
-              Đã lưu: <strong>{savedNickname}</strong>
-            </div>
-          )}
-        </div>
-
-        {/* ================= CHART ================= */}
-        <div className="chart-left">
-          <div className="birth-chart">
-            <div className="grid">
-              {[3, 6, 9, 2, 5, 8, 1, 4, 7].map(num => (
-                <Cell
-                  key={num}
-                  num={num}
-                  layers={layers}
-                  highlighted={isHighlighted(num)}
-                  highlightType={hoverArrow?.type}
-                />
-              ))}
-            </div>
-
-
-            <ArrowOverlay
-              arrowsPresent={showPresent ? arrows.arrowsPresent : []}
-              arrowsMissing={showMissing ? arrows.arrowsMissing : []}
-              setHoverArrow={setHoverArrow}
-              setMousePos={setMousePos}
-            />
-
-            {hoverArrow && (
-              <div
-                className={`arrow-tooltip ${hoverArrow.type}`}
-                style={{
-                  top: mousePos.y + 12,
-                  left: mousePos.x + 12
-                }}
-              >
-                {hoverArrow.label}
-              </div>
-            )}
-
-            <IslandOverlay islands={showIslands ? islands : []} />
-          </div>
-        </div>
-
-        {/* ================= LIST ================= */}
-        <div className="chart-right">
-          <h4>Danh sách mũi tên</h4>
-          <ul className="arrow-list">
-            {arrows.arrowsPresent.map(a => (
-              <li
-                key={a.key}
-                className="present"
-                onMouseEnter={() => setHoverArrow(a)}
-                onMouseLeave={() => setHoverArrow(null)}
-              >
-                {a.label}
-              </li>
-            ))}
-            {arrows.arrowsMissing.map(a => (
-              <li
-                key={a.key}
-                className="missing"
-                onMouseEnter={() => setHoverArrow(a)}
-                onMouseLeave={() => setHoverArrow(null)}
-              >
-                {a.label}
-              </li>
-            ))}
-          </ul>
-        </div>
+        ))}
       </div>
+
+      <ArrowOverlay
+        arrowsPresent={showPresent ? arrows.arrowsPresent : []}
+        arrowsMissing={showMissing ? arrows.arrowsMissing : []}
+        setHoverArrow={setHoverArrow}
+        hoverArrrow={hoverArrow}
+      />
+
+        {hoverArrow && (
+          <div
+            className={`arrow-tooltip ${hoverArrow.type}`}
+            style={{
+              transform: `translate(${mousePos.x + 12}px, ${mousePos.y + 12}px)`
+            }}
+          >
+            {hoverArrow.label}
+          </div>
+        )}
+
+
+      <IslandOverlay islands={showIslands ? islands : []} />
+    </div>
+  </div>
+
+  {/* ===== RIGHT: SIDE PANEL ===== */}
+  <div className="chart-side">
+
+    {/* Nickname */}
+    <div className={`chart-nickname ${addNickname ? "show" : "hide"}`}>
+      <label className="nickname-label">Nickname</label>
+
+      <input
+        type="text"
+        className="nickname-input"
+        placeholder="Nhập nickname..."
+        value={nickname}
+        onChange={e => setNickname(e.target.value)}
+      />
+
+      <button
+        className="nickname-save-btn"
+        onClick={() => setSavedNickname(nickname.trim())}
+      >
+        Lưu
+      </button>
+
+      {savedNickname && (
+        <div className="nickname-saved">
+          Đã lưu: <strong>{savedNickname}</strong>
+        </div>
+      )}
+    </div>
+
+    {/* Arrow list */}
+    <div className="chart-arrow">
+      <h4>Danh sách mũi tên</h4>
+      <ul className="arrow-list">
+        {arrows.arrowsPresent.map(a => (
+          <li
+            key={a.key}
+            className="present"
+            // onMouseEnter={() => setHoverArrow(a)}
+                        onMouseEnter={() => {
+              setHoverArrow(a);
+              console.log("hovered", a);
+            }}
+            
+            onMouseLeave={() => setHoverArrow(null)}
+          >
+            {a.label}
+          </li>
+        ))}
+
+        {arrows.arrowsMissing.map(a => (
+          <li
+            key={a.key}
+            className="missing"
+            // onMouseEnter={() => setHoverArrow(a)}
+              onMouseEnter={() => {
+              setHoverArrow(a);
+              console.log("hovered", a);
+            }}
+            
+            onMouseLeave={() => setHoverArrow(null)}
+          >
+            {a.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
     </>
   );
 }

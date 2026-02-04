@@ -4,8 +4,10 @@ import { reduceToOneDigit, reduceToOneDigitWithSpecial } from "../utils/math";
 export function calculateLifePathNumber(dob) {
   if (!dob) return null;
     // dob = "yyyy-mm-dd"
-    const dobNumber = dob.replaceAll("-", "");
-    const dobSum = dobNumber.split("").reduce((a, b) => a + Number(b), 0);
+    const [year, month, day] = dob.split("-").map(Number);
+    const dobSum = year + month + day;
+    // const dobNumber = dob.replaceAll("-", "");
+    // const dobSum = dobNumber.split("").reduce((a, b) => a + Number(b), 0);
     const lifePathNumber = reduceToOneDigitWithSpecial(dobSum);
     return lifePathNumber;
 }
