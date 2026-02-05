@@ -18,6 +18,17 @@ const NUMBER_CONFIG = [
   { key: "passionNumber", label: "Số đam mê" },
   { key: "confidentialNumber", label: "Số bảo mật" },
   { key: "connectionNumber", label: "Số kết nối" },
+  { key: "personalYearNumber", label: "Số cá nhân" },
+  { key: "personalMonthNumber", label: "Số tháng cá nhân" },
+  { key: "personalDayNumber", label: "Số ngày cá nhân" },
+  { key: "pinnacleNumber1", label: "Số đỉnh cao 1" },
+  { key: "pinnacleNumber2", label: "Số đỉnh cao 2" },
+  { key: "pinnacleNumber3", label: "Số đỉnh cao 3" },
+  { key: "pinnacleNumber4", label: "Số đỉnh cao 4" },
+  { key: "challengeNumber1", label: "Số thử thách 1"},
+  { key: "challengeNumber2", label: "Số thử thách 2"},
+  { key: "challengeNumber3", label: "Số thử thách 3"},
+  { key: "challengeNumber4", label: "Số thử thách 4"},
 ];
 
 /* =========================
@@ -33,6 +44,7 @@ function renderKarmicNumber(value) {
     </b>
   );
 }
+
 
 /* =========================
    MAIN COMPONENT

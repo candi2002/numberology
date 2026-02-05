@@ -12,6 +12,18 @@ export function calculateNumerology(name, dob) {
     const lifePathNumber = DateNum.calculateLifePathNumber(dob);//Số đường đời
     const innerSelfNumber = DateNum.calculateInnerSelfNumber(dob);//Số nội cảm
     const birthdayNumber = DateNum.calculateBirthdayNumber(dob);//Số ngày sinh
+    const personalYearNumber = DateNum.calculatePersonalYearNumber(dob, new Date().getFullYear());//Số cá nhân
+    const personalMonthNumber = DateNum.calculatePersonalMonthNumber(dob, new Date().getFullYear(), new Date().getMonth() + 1);//Số tháng cá nhân
+    const personalDayNumber = DateNum.calculatePersonalDayNumber(dob, new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate());//Số ngày cá nhân  
+    const challengeNumber1 = DateNum.calculateChallengeNumber(dob, 1);
+    const challengeNumber2 = DateNum.calculateChallengeNumber(dob, 2);
+    const challengeNumber3 = DateNum.calculateChallengeNumber(dob, 3);
+    const challengeNumber4 = DateNum.calculateChallengeNumber(dob, 4);
+    const pinnacleNumber1 = DateNum.calculatePinnacleNumber(dob,1);
+    const pinnacleNumber2 = DateNum.calculatePinnacleNumber(dob,2);
+    const pinnacleNumber3 = DateNum.calculatePinnacleNumber(dob,3);
+    const pinnacleNumber4 = DateNum.calculatePinnacleNumber(dob,4);
+
     // NAME NUMBERS
     const destinyNumber = NameNum.calculateDestinyNumber(name);//Số định mệnh
     const soulUrgeNumber = NameNum.calculateSoulNumber(name);//Số linh hồn
@@ -53,6 +65,17 @@ export function calculateNumerology(name, dob) {
     confidentialNumber,
     maturityNumber,
     connectionNumber,
+    personalYearNumber,
+    personalMonthNumber,
+    personalDayNumber,
+    pinnacleNumber1,
+    pinnacleNumber2,
+    pinnacleNumber3,
+    pinnacleNumber4,
+    challengeNumber1,
+    challengeNumber2,
+    challengeNumber3,
+    challengeNumber4,
     createAt: new Date().toISOString()
   };
 }

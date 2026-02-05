@@ -11,7 +11,7 @@ export function calcPyramidFromDOB(dob) {
 
   const birthYear = year;
 
-  const age1 = 36 - reduceToOneDigit(day * 1000000 + month * 10000 + year);
+  const age1 = 36 - reduceToOneDigit(d + m + y);
   const age2 = age1 + 9;
   const age3 = age2 + 9;
   const ageTop = age3 + 9;
