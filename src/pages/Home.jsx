@@ -64,6 +64,7 @@ export default function Home() {
               {/* Button toggle loại chart */}
               <ChartToggle dob={dob} name={name} />
 
+              
               {/* PYRAMID */}
               <h3>Chu kỳ Kim Tự Tháp 27 năm</h3>
               <div className="pyramid">
