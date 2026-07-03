@@ -116,7 +116,7 @@ export function calculateChallengeNumber(dob, index) {
   const d = reduceToOneDigit(day);
   const y = reduceToOneDigit(year);
 
-  const lifePath = calculateLifePathNumber(dob);
+  let lifePath = calculateLifePathNumber(dob);
   if(lifePath ==13 || lifePath ==14 || lifePath ==16 || lifePath ==19){
     lifePath =lifePath%9 || 9;
   }
