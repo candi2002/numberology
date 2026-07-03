@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { reduceToOneDigit } from "../../utils/math";
 
 /* =========================
    CONFIG DUY NHẤT
@@ -10,7 +11,7 @@ const NUMBER_CONFIG = [
   { key: "soulUrgeNumber", label: "Số linh hồn", karmic: true },
   { key: "personalityNumber", label: "Số tính cách", karmic: true },
   { key: "maturityNumber", label: "Số trưởng thành", karmic: true },
-  { key: "innerSelfNumber", label: "Số nội cảm", karmic: true },
+  { key: "innerSelfNumber", label: "Số thái độ", karmic: true },
 
   { key: "balanceNumber", label: "Số cân bằng" },
   { key: "subconsciousNumber", label: "Số tiềm thức" },
@@ -35,14 +36,21 @@ const NUMBER_CONFIG = [
    HELPER RENDER
 ========================= */
 function renderKarmicNumber(value) {
-  if (value >= 0) return <b>{value}</b>;
+  if (value != 13 && value != 14 && value != 16 && value != 19) return <b>{value}</b>;
 
   return (
     <b>
-      {Math.abs(value)}
+      {value%9 || 9}
       <span className="karmic-debt"> nợ nghiệp</span>
     </b>
   );
+}
+function renderNormalNumber(value) {
+  if(value == 13 || value == 14 || value == 16 || value == 19) return <b>{reduceToOneDigit(value)}</b>;
+  return <b>{value}</b>;
+}
+function renderArrayNumber(value) {
+  return <b>{value.join(", ")}</b>;
 }
 
 
@@ -132,7 +140,7 @@ export default function NumberResultPanel({ result }) {
               {cfg.karmic ? (
                 renderKarmicNumber(value)
               ) : (
-                <b>{cfg.array ? value.join(", ") : value}</b>
+                <b>{cfg.array ? renderArrayNumber(value) : renderNormalNumber(value) }</b>
               )}
             </div>
           );

@@ -1,4 +1,4 @@
-import { reduceToOneDigit, reduceToOneDigitWithSpecial } from "../utils/math";
+import { reduceToOneDigit} from "../utils/math";
 
 //Số đường đời
 export function calculateLifePathNumber(dob) {
@@ -6,10 +6,13 @@ export function calculateLifePathNumber(dob) {
     // dob = "yyyy-mm-dd"
     const [year, month, day] = dob.split("-").map(Number);
     const dobSum = year + month + day;
-    // const dobNumber = dob.replaceAll("-", "");
-    // const dobSum = dobNumber.split("").reduce((a, b) => a + Number(b), 0);
-    const lifePathNumber = reduceToOneDigitWithSpecial(dobSum);
-    return lifePathNumber;
+    const yearSum = reduceToOneDigit(year);
+    const monthSum = reduceToOneDigit(month);
+    const daySum = reduceToOneDigit(day);
+    const totalSum = yearSum + monthSum + daySum;
+    const dobTotalSum = reduceToOneDigit(totalSum);
+
+    return dobTotalSum;
 }
 //Số nội cảm
 export function calculateInnerSelfNumber(dob) {
@@ -17,15 +20,17 @@ export function calculateInnerSelfNumber(dob) {
 
   // dob = "yyyy-mm-dd"
   const [, month, day] = dob.split("-").map(Number);
-
-  return reduceToOneDigitWithSpecial(day + month);
+  const monthSum = reduceToOneDigit(month);
+  const daySum = reduceToOneDigit(day);
+  return reduceToOneDigit(monthSum + daySum);
 }
+
 //Số Ngày sinh
 export function calculateBirthdayNumber(dob) {
   if (!dob) return null;
   // dob = "yyyy-mm-dd"
   const day = Number(dob.split("-")[2]);
-  return reduceToOneDigitWithSpecial(day);
+  return reduceToOneDigit(day);
 }
 
 //Số cá nhân
@@ -33,21 +38,23 @@ export function calculatePersonalYearNumber(dob, year) {
   if (!dob || !year) return null; 
   // dob = "yyyy-mm-dd"
   const [, month, day] = dob.split("-").map(Number);
-  const personalYearSum = reduceToOneDigitWithSpecial(month + day + year);
+  const monthSum = reduceToOneDigit(month);
+  const daySum = reduceToOneDigit(day);
+  const personalYearSum = reduceToOneDigit(monthSum + daySum + year);
   return personalYearSum;
 }
 //Số tháng cá nhân
 export function calculatePersonalMonthNumber(dob, year, month) {
   if (!dob || !year || !month) return null; 
   const personalYearNumber = calculatePersonalYearNumber(dob, year);
-  const personalMonthSum = reduceToOneDigitWithSpecial(personalYearNumber + month);
+  const personalMonthSum = reduceToOneDigit(personalYearNumber + month);
   return personalMonthSum;
 }
 //Số ngày cá nhân
 export function calculatePersonalDayNumber(dob, year, month, day) {
   if (!dob || !year || !month || !day) return null; 
   const personalMonthNumber = calculatePersonalMonthNumber(dob, year, month);
-  const personalDaySum = reduceToOneDigitWithSpecial(personalMonthNumber + day);
+  const personalDaySum = reduceToOneDigit(personalMonthNumber + day);
   return personalDaySum;
 } 
 // Số đỉnh cao (Pinnacle Number) -> trả về "X (YY tuổi)"

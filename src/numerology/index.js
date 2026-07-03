@@ -1,6 +1,6 @@
 import * as NameNum from "./nameNumbers";
 import * as DateNum from "./dateNumbers";
-import { reduceToOneDigitWithSpecial, reduceToOneDigit } from "../utils/math";
+import { reduceToOneDigit} from "../utils/math";
 
 export function calculateNumerology(name, dob) {
   if (!name || !dob) {
@@ -30,7 +30,7 @@ export function calculateNumerology(name, dob) {
     const personalityNumber = NameNum.calculatePersonalityNumber(name);//Số tính cách
 
         // Số kết hợp
-    const maturityNumber = reduceToOneDigitWithSpecial(Math.abs(lifePathNumber) + Math.abs(destinyNumber));//Số trưởng thành
+    const maturityNumber = reduceToOneDigit(Math.abs(lifePathNumber) + Math.abs(destinyNumber));//Số trưởng thành
 
 
 

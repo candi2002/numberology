@@ -1,6 +1,6 @@
 import { letterMap, VOWELS } from "./constants";
 import { normalizeName } from "../utils/normalize";
-import { reduceToOneDigit, reduceToOneDigitWithSpecial } from "../utils/math";
+import { reduceToOneDigit} from "../utils/math";
 
 
 export function calculateSoulNumber(fullName) {
@@ -14,7 +14,7 @@ export function calculateSoulNumber(fullName) {
     }
   }
 
-  return reduceToOneDigitWithSpecial(total);
+  return reduceToOneDigit(total);
 }
 
 
@@ -29,7 +29,7 @@ export function calculatePersonalityNumber(fullName) {
     }
   }
 
-  return reduceToOneDigitWithSpecial(total);
+  return reduceToOneDigit(total);
 }
 
 
@@ -42,7 +42,7 @@ export function calculateDestinyNumber(fullName) {
     total += letterMap[char] || 0;
   }
 
-  return reduceToOneDigitWithSpecial(total);
+  return reduceToOneDigit(total);
 }
 
 
