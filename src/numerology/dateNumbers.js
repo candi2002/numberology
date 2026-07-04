@@ -116,10 +116,8 @@ export function calculateChallengeNumber(dob, index) {
   const d = reduceToOneDigit(day);
   const y = reduceToOneDigit(year);
 
-  let lifePath = calculateLifePathNumber(dob);
-  if(lifePath ==13 || lifePath ==14 || lifePath ==16 || lifePath ==19){
-    lifePath =lifePath%9 || 9;
-  }
+  const lifePath = calculateLifePathNumber(dob);
+
 
   switch (index) {
     case 1:
@@ -145,7 +143,9 @@ export function calculateChallengeNumber(dob, index) {
     default:
       return "";
   }
-
+  if(lifePath == 13 || lifePath == 14 || lifePath == 16 || lifePath == 19) {
+    age += 9;
+  }
   const finalNumber = Math.abs(reduceToOneDigit(number));
 
   return `${finalNumber} (${age} tuổi)`;
