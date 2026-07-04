@@ -98,6 +98,7 @@ export function calculatePinnacleNumber(dob, index) {
   }
 
   const finalNumber = reduceToOneDigit(number);
+  age += (lifePath == 13 || lifePath == 14 || lifePath == 16 || lifePath == 19) ? 9 : 0;
 
   return `${finalNumber} (${age} tuổi)`;
 }
@@ -143,9 +144,11 @@ export function calculateChallengeNumber(dob, index) {
     default:
       return "";
   }
-  if(lifePath == 13 || lifePath == 14 || lifePath == 16 || lifePath == 19) {
-    age += 9;
-  }
+
+  // if(lifePath == 13 || lifePath == 14 || lifePath == 16 || lifePath == 19) {
+  //   age += 9;
+  // }
+  age += (lifePath == 13 || lifePath == 14 || lifePath == 16 || lifePath == 19) ? 9 : 0;
   const finalNumber = Math.abs(reduceToOneDigit(number));
 
   return `${finalNumber} (${age} tuổi)`;

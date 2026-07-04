@@ -46,7 +46,7 @@ function renderKarmicNumber(value) {
   );
 }
 function renderNormalNumber(value) {
-  if(value == 13 || value == 14 || value == 16 || value == 19) return <b>{reduceToOneDigit(value)}</b>;
+  if(value == 13 || value == 14 || value == 16 || value == 19) return <b>{value%9 || 9}</b>;
   return <b>{value}</b>;
 }
 function renderArrayNumber(value) {
